@@ -73,12 +73,12 @@ public interface HospitalDao {
     int deleteById(Integer id);
 
     /**
-     * 通过栏目Id删除数据
+     * 通过栏目Id修改数据
      *
      * @param partId partId
      * @return 影响行数
      */
-    int deleteByPartId(Integer partId);
+    int updateByPartId(Integer partId);
 
 }
 

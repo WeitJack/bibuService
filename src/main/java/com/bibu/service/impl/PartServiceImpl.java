@@ -93,7 +93,7 @@ public class PartServiceImpl implements PartService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        int hospitalFlag = this.hospitalDao.deleteById(id);
+        int hospitalFlag = this.hospitalDao.updateByPartId(id);
         int partFlag = this.partDao.deleteById(id);
         return hospitalFlag > 0 && partFlag > 0;
     }

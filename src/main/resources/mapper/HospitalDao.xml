@@ -107,9 +107,9 @@
         delete from hospital where id = #{id}
     </delete>
 
-    <!--通过主键删除-->
-    <delete id="deleteByPartId">
-        delete from hospital where part_id = #{partId}
+    <!--通过partId修改-->
+    <delete id="updateByPartId">
+        update hospital set part_id is null where part_id = #{partId}
     </delete>
 
 </mapper>
