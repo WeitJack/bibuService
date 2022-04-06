@@ -29,7 +29,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="ContentMap">
         select
-          id, label, title, part_id, is_hot, desc, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time
+          id, label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time
         from content
         where id = #{id}
     </select>
@@ -37,7 +37,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ContentMap">
         select
-        id, label, title, part_id, is_hot, desc, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author,
+        id, label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author,
         transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time
         from content
         <where>
@@ -57,7 +57,7 @@
                 and is_hot = #{isHot}
             </if>
             <if test="desc != null and desc != ''">
-                and desc = #{desc}
+                and `desc` = #{desc}
             </if>
             <if test="seoTitle != null and seoTitle != ''">
                 and seo_title = #{seoTitle}
@@ -128,7 +128,7 @@
                 and is_hot = #{isHot}
             </if>
             <if test="desc != null and desc != ''">
-                and desc = #{desc}
+                and `desc` = #{desc}
             </if>
             <if test="seoTitle != null and seoTitle != ''">
                 and seo_title = #{seoTitle}
@@ -180,12 +180,12 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into content(label, title, part_id, is_hot, desc, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time)
+        insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time)
         values (#{label}, #{title}, #{partId}, #{isHot}, #{desc}, #{seoTitle}, #{seoKeyword}, #{seoDesc}, #{thumbnail}, #{link}, #{source}, #{author}, #{transportType}, #{recommendPlateId}, #{pcContent}, #{mobileContent}, #{sort}, #{status}, #{createTime}, #{updateTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into content(label, title, part_id, is_hot, desc, seo_title, seo_keyword, seo_desc, thumbnail, link,
+        insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link,
         source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time,
         update_time)
         values
@@ -198,7 +198,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
-        insert into content(label, title, part_id, is_hot, desc, seo_title, seo_keyword, seo_desc, thumbnail, link,
+        insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link,
         source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time,
         update_time)
         values
@@ -213,7 +213,7 @@
         title = values(title),
         part_id = values(part_id),
         is_hot = values(is_hot),
-        desc = values(desc),
+        `desc` = values(`desc`),
         seo_title = values(seo_title),
         seo_keyword = values(seo_keyword),
         seo_desc = values(seo_desc),
@@ -248,7 +248,7 @@
                 is_hot = #{isHot},
             </if>
             <if test="desc != null and desc != ''">
-                desc = #{desc},
+                `desc` = #{desc},
             </if>
             <if test="seoTitle != null and seoTitle != ''">
                 seo_title = #{seoTitle},
