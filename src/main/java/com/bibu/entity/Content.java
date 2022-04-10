@@ -83,6 +83,10 @@ public class Content extends PageBean implements Serializable {
      */
     private String mobileContent;
     /**
+     * 浏览数
+     */
+    private Integer viewCount;
+    /**
      * 排序
      */
     private Integer sort;
@@ -98,6 +102,10 @@ public class Content extends PageBean implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+    /**
+     * 栏目名称
+     */
+    private String partName;
 
 
     public Integer getId() {
@@ -236,6 +244,14 @@ public class Content extends PageBean implements Serializable {
         this.mobileContent = mobileContent;
     }
 
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
     public Integer getSort() {
         return sort;
     }
@@ -268,5 +284,12 @@ public class Content extends PageBean implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getPartName() {
+        return partName;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
 }
 

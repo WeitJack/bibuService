@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bibu.dao.DistDao">
+
+    <resultMap type="com.bibu.entity.Dist" id="DistMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="key" column="key" jdbcType="VARCHAR"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="comments" column="comments" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DistMap">
+        select
+          id, `key`, `value`, `type`, comments, status
+        from dist
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DistMap">
+        select
+          id, `key`, `value`, `type`, comments, status
+        from dist
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="key != null and key != ''">
+                and `key` = #{key}
+            </if>
+            <if test="value != null and value != ''">
+                and `value` = #{value}
+            </if>
+            <if test="type != null and type != ''">
+                and `type` = #{type}
+            </if>
+            <if test="comments != null and comments != ''">
+                and comments = #{comments}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from dist
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="key != null and key != ''">
+                and `key` = #{key}
+            </if>
+            <if test="value != null and value != ''">
+                and `value` = #{value}
+            </if>
+            <if test="type != null and type != ''">
+                and `type` = #{type}
+            </if>
+            <if test="comments != null and comments != ''">
+                and comments = #{comments}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into dist(`key`, `value`, `type`, comments, status)
+        values (#{key}, #{value}, #{type}, #{comments}, #{status})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dist(`key`, `value`, `type`, comments, status)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.key}, #{entity.value}, #{entity.type}, #{entity.comments}, #{entity.status})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into dist(`key`, `value`, `type`, comments, status)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.key}, #{entity.value}, #{entity.type}, #{entity.comments}, #{entity.status})
+        </foreach>
+        on duplicate key update
+        `key` = values(`key`),
+        `value` = values(`value`),
+        `type` = values(`type`),
+        comments = values(comments),
+        status = values(status)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update dist
+        <set>
+            <if test="key != null and key != ''">
+                `key` = #{key},
+            </if>
+            <if test="value != null and value != ''">
+                `value` = #{value},
+            </if>
+            <if test="type != null and type != ''">
+                `type` = #{type},
+            </if>
+            <if test="comments != null and comments != ''">
+                comments = #{comments},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from dist where id = #{id}
+    </delete>
+
+</mapper>
+

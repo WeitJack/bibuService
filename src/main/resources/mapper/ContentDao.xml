@@ -20,89 +20,90 @@
         <result property="recommendPlateId" column="recommend_plate_id" jdbcType="INTEGER"/>
         <result property="pcContent" column="pc_content" jdbcType="VARCHAR"/>
         <result property="mobileContent" column="mobile_content" jdbcType="VARCHAR"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="partName" column="part_name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ContentMap">
         select
-          id, label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time
-        from content
-        where id = #{id}
+          c.id, c.label, c.title, c.part_id, c.is_hot, c.`desc`, c.seo_title, c.seo_keyword, c.seo_desc, c.thumbnail, c.link, c.source, c.author, c.transport_type, c.recommend_plate_id, c.pc_content, c.mobile_content, c.view_count, c.sort, c.status, c.create_time, c.update_time,p.name as part_name
+        from content c left join part p on c.part_id = p.id
+        where c.id = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ContentMap">
         select
-        id, label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author,
-        transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time
-        from content
+        c.id, c.label, c.title, c.part_id, c.is_hot, c.`desc`, c.seo_title, c.seo_keyword, c.seo_desc, c.thumbnail, c.link, c.source, c.author, c.transport_type, c.recommend_plate_id, c.pc_content, c.mobile_content, c.view_count, c.sort, c.status, c.create_time, c.update_time,p.name as part_name
+        from content c left join part p on c.part_id = p.id
         <where>
             <if test="id != null">
-                and id = #{id}
+                and c.id = #{id}
             </if>
             <if test="label != null and label != ''">
-                and label = #{label}
+                and c.label = #{label}
             </if>
             <if test="title != null and title != ''">
-                and title = #{title}
+                and c.title = #{title}
             </if>
             <if test="partId != null">
-                and part_id = #{partId}
+                and c.part_id = #{partId}
             </if>
             <if test="isHot != null">
-                and is_hot = #{isHot}
+                and c.is_hot = #{isHot}
             </if>
             <if test="desc != null and desc != ''">
-                and `desc` = #{desc}
+                and c.`desc` = #{desc}
             </if>
             <if test="seoTitle != null and seoTitle != ''">
-                and seo_title = #{seoTitle}
+                and c.seo_title = #{seoTitle}
             </if>
             <if test="seoKeyword != null and seoKeyword != ''">
-                and seo_keyword = #{seoKeyword}
+                and c.seo_keyword = #{seoKeyword}
             </if>
             <if test="seoDesc != null and seoDesc != ''">
-                and seo_desc = #{seoDesc}
+                and c.seo_desc = #{seoDesc}
             </if>
             <if test="thumbnail != null and thumbnail != ''">
-                and thumbnail = #{thumbnail}
+                and c.thumbnail = #{thumbnail}
             </if>
             <if test="link != null and link != ''">
-                and link = #{link}
+                and c.link = #{link}
             </if>
             <if test="source != null and source != ''">
-                and source = #{source}
+                and c.source = #{source}
             </if>
             <if test="author != null and author != ''">
-                and author = #{author}
+                and c.author = #{author}
             </if>
             <if test="transportType != null">
-                and transport_type = #{transportType}
+                and c.transport_type = #{transportType}
             </if>
             <if test="recommendPlateId != null">
-                and recommend_plate_id = #{recommendPlateId}
+                and c.recommend_plate_id = #{recommendPlateId}
             </if>
             <if test="pcContent != null and pcContent != ''">
-                and pc_content = #{pcContent}
+                and c.pc_content = #{pcContent}
             </if>
             <if test="mobileContent != null and mobileContent != ''">
-                and mobile_content = #{mobileContent}
+                and c.mobile_content = #{mobileContent}
             </if>
             <if test="sort != null">
-                and sort = #{sort}
+                and c.sort = #{sort}
             </if>
             <if test="status != null">
                 and status = #{status}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and c.create_time = #{createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and c.update_time = #{updateTime}
             </if>
         </where>
     </select>
@@ -180,33 +181,33 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time, update_time)
-        values (#{label}, #{title}, #{partId}, #{isHot}, #{desc}, #{seoTitle}, #{seoKeyword}, #{seoDesc}, #{thumbnail}, #{link}, #{source}, #{author}, #{transportType}, #{recommendPlateId}, #{pcContent}, #{mobileContent}, #{sort}, #{status}, #{createTime}, #{updateTime})
+        insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link, source, author, transport_type, recommend_plate_id, pc_content, mobile_content, view_count, sort, status, create_time, update_time)
+        values (#{label}, #{title}, #{partId}, #{isHot}, #{desc}, #{seoTitle}, #{seoKeyword}, #{seoDesc}, #{thumbnail}, #{link}, #{source}, #{author}, #{transportType}, #{recommendPlateId}, #{pcContent}, #{mobileContent}, #{viewCount}, #{sort}, #{status}, #{createTime}, #{updateTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
         insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link,
-        source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time,
+        source, author, transport_type, recommend_plate_id, pc_content, mobile_content, view_count, sort, status, create_time,
         update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.label}, #{entity.title}, #{entity.partId}, #{entity.isHot}, #{entity.desc}, #{entity.seoTitle},
             #{entity.seoKeyword}, #{entity.seoDesc}, #{entity.thumbnail}, #{entity.link}, #{entity.source},
             #{entity.author}, #{entity.transportType}, #{entity.recommendPlateId}, #{entity.pcContent},
-            #{entity.mobileContent}, #{entity.sort}, #{entity.status}, #{entity.createTime}, #{entity.updateTime})
+            #{entity.mobileContent}, #{entity.viewCount}, #{entity.sort}, #{entity.status}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
         insert into content(label, title, part_id, is_hot, `desc`, seo_title, seo_keyword, seo_desc, thumbnail, link,
-        source, author, transport_type, recommend_plate_id, pc_content, mobile_content, sort, status, create_time,
+        source, author, transport_type, recommend_plate_id, pc_content, mobile_content, view_count, sort, status, create_time,
         update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.label}, #{entity.title}, #{entity.partId}, #{entity.isHot}, #{entity.desc}, #{entity.seoTitle},
             #{entity.seoKeyword}, #{entity.seoDesc}, #{entity.thumbnail}, #{entity.link}, #{entity.source},
             #{entity.author}, #{entity.transportType}, #{entity.recommendPlateId}, #{entity.pcContent},
-            #{entity.mobileContent}, #{entity.sort}, #{entity.status}, #{entity.createTime}, #{entity.updateTime})
+            #{entity.mobileContent}, #{entity.viewCount}, #{entity.sort}, #{entity.status}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
         on duplicate key update
         label = values(label),
@@ -225,6 +226,7 @@
         recommend_plate_id = values(recommend_plate_id),
         pc_content = values(pc_content),
         mobile_content = values(mobile_content),
+        view_count = values(view_count),
         sort = values(sort),
         status = values(status),
         create_time = values(create_time),
@@ -282,6 +284,9 @@
             </if>
             <if test="mobileContent != null and mobileContent != ''">
                 mobile_content = #{mobileContent},
+            </if>
+            <if test="viewCount != null">
+                view_count = #{viewCount},
             </if>
             <if test="sort != null">
                 sort = #{sort},
