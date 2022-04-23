@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -55,6 +56,7 @@ public class ContentServiceImpl implements ContentService {
      */
     @Override
     public Content insert(Content content) {
+        content.setCreateTime(new Date());
         this.contentDao.insert(content);
         return content;
     }
@@ -67,6 +69,7 @@ public class ContentServiceImpl implements ContentService {
      */
     @Override
     public Content update(Content content) {
+        content.setUpdateTime(new Date());
         this.contentDao.update(content);
         return this.queryById(content.getId());
     }
